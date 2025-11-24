@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHUTTER - Profile</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1d35 50%, #0f1428 100%);
+            color: #e0e0e0;
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.8;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(15, 20, 40, 0.8);
+            border: 2px solid #ff3333;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(255, 51, 51, 0.3), inset 0 0 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a0a0a 0%, #330a0a 100%);
+            padding: 50px 30px;
+            text-align: center;
+            border-bottom: 3px solid #ff3333;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 51, 51, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .codename {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4em;
+            font-weight: 900;
+            color: #ff3333;
+            text-shadow: 0 0 20px #ff3333, 0 0 40px #ff3333, 0 0 60px #ff0000;
+            letter-spacing: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            color: #aaaaaa;
+            font-weight: 300;
+            letter-spacing: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #ff3333 50%, transparent 100%);
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff3333;
+            font-size: 1.2em;
+        }
+        
+        .divider::before {
+            left: -10px;
+        }
+        
+        .divider::after {
+            right: -10px;
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            background: rgba(20, 25, 45, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #ff3333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            color: #ff3333;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 51, 51, 0.3);
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            letter-spacing: 3px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            background: rgba(10, 14, 39, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 51, 51, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .info-item:hover {
+            border-color: #ff3333;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .info-label {
+            font-size: 0.9em;
+            color: #ff6666;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .info-value {
+            font-size: 1.1em;
+            color: #e0e0e0;
+        }
+        
+        .description {
+            line-height: 2;
+            color: #d0d0d0;
+            font-size: 1.05em;
+            text-align: justify;
+            background: rgba(10, 14, 39, 0.6);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 51, 51, 0.1);
+        }
+        
+        .ability-card {
+            background: linear-gradient(135deg, rgba(26, 10, 10, 0.8) 0%, rgba(10, 14, 39, 0.8) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 51, 51, 0.3);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .ability-card:hover {
+            border-color: #ff3333;
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.2);
+        }
+        
+        .ability-name {
+            font-size: 1.4em;
+            color: #ff4444;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+        }
+        
+        .ability-desc {
+            color: #c0c0c0;
+            line-height: 1.8;
+        }
+        
+        .status-bar {
+            margin: 15px 0;
+        }
+        
+        .status-label {
+            color: #ff6666;
+            font-size: 0.95em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .status-bar-container {
+            width: 100%;
+            height: 25px;
+            background: rgba(10, 14, 39, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 51, 51, 0.3);
+        }
+        
+        .status-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000 0%, #ff3333 50%, #ff6666 100%);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+            transition: width 2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+        
+        .classification-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #330000 0%, #660000 100%);
+            border: 2px solid #ff3333;
+            border-radius: 25px;
+            color: #ff6666;
+            font-weight: 700;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
+            margin: 5px;
+        }
+        
+        .story-timeline {
+            position: relative;
+            padding-left: 40px;
+            border-left: 3px solid rgba(255, 51, 51, 0.3);
+        }
+        
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '●';
+            position: absolute;
+            left: -49px;
+            color: #ff3333;
+            font-size: 1.5em;
+            text-shadow: 0 0 10px #ff3333;
+        }
+        
+        .timeline-phase {
+            color: #ff6666;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-desc {
+            color: #d0d0d0;
+            line-height: 1.8;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(10, 14, 39, 0.8);
+            border-top: 2px solid rgba(255, 51, 51, 0.3);
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .glitch {
+            animation: glitch 3s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 90%, 100% { opacity: 1; }
+            92%, 96% { opacity: 0.8; }
+            94% { opacity: 0.6; }
+        }
+        
+        @media (max-width: 768px) {
+            .codename {
+                font-size: 2.5em;
+                letter-spacing: 8px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="codename glitch">SHUTTER</div>
+        </div>
+        
+        <div class="content">
+            <!-- 基本情報 -->
+            <div class="section">
+                <h2 class="section-title">◆ BASIC INFORMATION</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">✦ コードネーム</div>
+                        <div class="info-value">シャッター (SHUTTER)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 種族</div>
+                        <div class="info-value">宇宙生命体</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 出身</div>
+                        <div class="info-value">遥か彼方の銀河</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 性別</div>
+                        <div class="info-value">概念的には無性 (擬態形態は女性)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 分類</div>
+                        <div class="info-value">ダークヒーロー</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 活動拠点</div>
+                        <div class="info-value">クラウディウス都市 / カフェテリア</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 外見特徴 -->
+            <div class="section">
+                <h2 class="section-title">◆ APPEARANCE</h2>
+                <div class="description">
+                    擬態時の姿は黒髪のショートヘアに、鮮烈な赤い瞳を持つ少女の姿を取る。全身を覆う漆黒の衣装は、彼女の本体であるアメーバ状の物質が形を成したものであり、必要に応じて自在に変形する。特徴的な赤い瞳は、実は彼女の核である心臓部分の色が反映されたものである。
+                    <br><br>
+                    身長は擬態時で約155cm前後だが、本来は明確な形を持たないため、状況に応じて自由に変化させることができる。
+                </div>
+            </div>
+            
+            <!-- 生態と本質 -->
+            <div class="section">
+                <h2 class="section-title">◆ BIOLOGY & ESSENCE</h2>
+                <div class="description">
+                    シャッターの本来の姿は、明確な形を持たないアメーバ状の黒い生命体である。その中心には赤く輝く球体──彼女の心臓と呼ぶべき核が存在し、この核を中心に黒い物質がまとわりついて生命活動を維持している。
+                    <br><br>
+                    生態の詳細は未だ多くが謎に包まれているが、他の生命体に取り憑き、その姿や能力を模倣・吸収する能力を有している。また、物理的な形態を自在に変化させることができ、武器や防具、あるいは全く別の生物の姿にまで変身することが可能である。
+                    <br><br>
+                    高度な知性を持ち、既にクラウディウス都市で使用される言語はもちろん、宇宙の様々な言語体系を習得している。学習能力は驚異的で、一度経験したことは完璧に記憶し、応用することができる。その知性は人類のそれを遥かに凌駕すると推測されるが、感情や価値観においては、まだ人間社会に適応しようとしている段階にある。
+                </div>
+            </div>
+            
+            <!-- 能力・戦闘スペック -->
+            <div class="section">
+                <h2 class="section-title">◆ ABILITIES & COMBAT SPECS</h2>
+                
+                <div class="ability-card">
+                    <div class="ability-name">【変形・擬態能力】</div>
+                    <div class="ability-desc">
+                        自身の身体を構成する黒い物質を自在に操り、あらゆる形状に変化させることができる。生物の姿を模倣するだけでなく、刃物や盾などの無機物にも変形可能。一度接触した対象の情報を取り込むことで、より精密な擬態が可能になる。
+                    </div>
+                </div>
+                
+                <div class="ability-card">
+                    <div class="ability-name">【捕食・吸収】</div>
+                    <div class="ability-desc">
+                        他の生命体の一部、あるいは全体を取り込むことで、その能力や記憶、外見を獲得できる。ただし、現在はカフェテリアの仲間たちとの約束により、無闇な捕食は行わないと誓っている。過去の捕食経験から得た知識と能力は今も保持している。
+                    </div>
+                </div>
+                
+                <div class="ability-card">
+                    <div class="ability-name">【超再生能力】</div>
+                    <div class="ability-desc">
+                        核である赤い心臓さえ無事であれば、身体がどれほど損傷しても瞬時に再生可能。物理攻撃に対しては極めて高い耐性を持つ。ただし、高熱や特殊なエネルギー攻撃、核への直接攻撃には脆弱性を示す。
+                    </div>
+                </div>
+                
+                <div class="ability-card">
+                    <div class="ability-name">【言語理解・多言語習得】</div>
+                    <div class="ability-desc">
+                        宇宙の様々な文明の言語を習得済み。新しい言語も短時間で理解し、使用できるようになる。コミュニケーション能力は非常に高く、文化的なニュアンスまで理解している。
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <h3 style="color: #ff6666; font-size: 1.3em; margin: 30px 0 20px 0; font-weight: 700;">● 戦闘能力評価</h3>
+                
+                <div class="status-bar">
+                    <div class="status-label">
+                        <span>攻撃力 (ATTACK)</span>
+                        <span>S</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <div class="status-bar-fill" style="width: 95%;"></div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-label">
+                        <span>防御力 (DEFENSE)</span>
+                        <span>A</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <div class="status-bar-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-label">
+                        <span>速度 (SPEED)</span>
+                        <span>S+</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <div class="status-bar-fill" style="width: 98%;"></div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-label">
+                        <span>知能 (INTELLIGENCE)</span>
+                        <span>SS</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <div class="status-bar-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-label">
+                        <span>適応力 (ADAPTABILITY)</span>
+                        <span>EX</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <div class="status-bar-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-label">
+                        <span>脅威度 (THREAT LEVEL)</span>
+                        <span>UNKNOWN</span>
+                    </div>
+                    <div class="status-bar-container">
+                        <div class="status-bar-fill" style="width: 92%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 性格・パーソナリティ -->
+            <div class="section">
+                <h2 class="section-title">◆ PERSONALITY</h2>
+                <div class="description">
+                    高い知性と冷静な判断力を持ちながらも、人間社会の感情や文化については学習中の段階にある。狡猾で計算高い一面を持ち、状況に応じて最適な行動を瞬時に判断できる。この特性から「小悪魔系」と評されることが多いが、実際には意外なほど初心で純粋な一面も持ち合わせている。
+                    <br><br>
+                    特に、人間の「善意」や「友情」といった概念には強い興味を示し、それらを理解しようと努力している。かつては本能のままに行動していたが、クラウディウス都市での出会いと経験を通じて、「仲間」という概念を知り、自らの行動を律するようになった。
+                    <br><br>
+                    言葉選びは慎重で、時に詩的な表現を好む。ユーモアのセンスも持ち合わせているが、時折人間の常識から外れた発言をして周囲を困惑させることもある。カフェテリアでは静かにコーヒーを飲みながら、人間たちの会話を興味深そうに聞いている姿がよく目撃される。
+                </div>
+            </div>
+            
+            <!-- 対人関係 -->
+            <div class="section">
+                <h2 class="section-title">◆ RELATIONSHIPS</h2>
+                <div class="description">
+                    <strong style="color: #ff6666;">● カフェテリアのヒーローたち</strong><br>
+                    当初は敵対関係にあったが、現在では一定の信頼関係を築いている。完全に心を開いているわけではないが、彼らとの時間を「価値あるもの」と認識している様子。特に対話を重視するタイプのヒーローとは、哲学的な議論を楽しむこともある。
+                    <br><br>
+                    <strong style="color: #ff6666;">● クラウディウス市民</strong><br>
+                    一般市民からは依然として警戒されることが多い。過去の事件の記憶が消えたわけではないため、彼女の存在は「必要悪」として認識されている。ただし、彼女が救った人々からは、複雑ながらも感謝の念を向けられることもある。
+                    <br><br>
+                    <strong style="color: #ff6666;">● ヴィランたち</strong><br>
+                    ダークヒーローという立場のため、純粋なヴィランからは裏切り者と見なされることもあれば、協力を求められることもある。シャッター自身は「正義」にも「悪」にも完全には属さず、自らの判断基準で行動を選択している。
+                </div>
+            </div>
+            
+            <!-- 弱点・特記事項 -->
+            <div class="section">
+                <h2 class="section-title">◆ WEAKNESSES & NOTES</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">✦ 弱点①</div>
+                        <div class="info-value">核(赤い心臓)への直接攻撃</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 弱点②</div>
+                        <div class="info-value">極端な高温・低温環境</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 弱点③</div>
+                        <div class="info-value">特定周波数の音波攻撃</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 好物</div>
+                        <div class="info-value">カフェテリアのブラックコーヒー</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 興味</div>
+                        <div class="info-value">人間の感情と文化の研究</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">✦ 秘密</div>
+                        <div class="info-value">故郷の銀河での過去[CLASSIFIED]</div>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="description" style="margin-top: 30px;">
+                    <strong style="color: #ff6666; font-size: 1.2em;">⚠ 特記事項</strong><br><br>
+                    シャッターは現在、クラウディウス政府による監視対象リストに登録されている。ダークヒーローとしての活動は黙認されているが、その能力の危険性から、定期的な行動報告が求められている。また、カフェテリアのヒーローたちは、万が一彼女が暴走した場合の対処計画を密かに保持している──彼女自身もそのことを知っており、それを「信頼の証」として受け入れている。
+                    <br><br>
+                    彼女が時折見せる憂いを帯びた表情の理由、そして故郷の銀河で何があったのかについては、まだ誰も知らない。それは彼女が心の奥底に秘めた、最後の謎である。
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>CLAUDIUS HIMAJIN ORIGINAL CHARACTER</p>
+            <p style="margin-top: 15px; color: #ff3333;">⬤ CHARACTER ID: SHUTTER ⬤</p>
+        </div>
+    </div>
+</body>
+</html>
